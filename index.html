@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1 id="client-name">Buchupalle Purna Tejeshwara Reddy</h1>
+        <nav>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#recommendations">Recommendations</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- About Me Section -->
+    <section id="about">
+        <img src="profile.jpg" alt="Profile Picture" id="profile-image">
+        <h2>About Me</h2>
+        <p>
+            Hello! My name is Buchupalle Purna Tejeshwara Reddy, and I am a passionate and dedicated professional with a strong foundation in technical industries. With a background in Polytechnic in CSE and Arduino projects, I have honed my skills in various areas, including listening to music, reading books, talking with unknown people, researching new things, solo driving, and more. I have successfully contributed to several projects:
+        </p>
+        <p>
+            During my school days:
+            <ul>
+                <li>Created a robot with my team that assists in serving items and performing small tasks like welcoming people.</li>
+                <li>Participated in a team project analyzing how sperm ejaculation reduces men's stress.</li>
+            </ul>
+        </p>
+        <p>
+            During my polytechnic studies:
+            <ul>
+                <li>Developed a movie ticket booking process website.</li>
+                <li>Created a fully functional website with indirect backend work.</li>
+                <li>Designed a combined hardware and software stick using Arduino for blind people.</li>
+            </ul>
+        </p>
+        <p>
+            Over the past few years, I have gained invaluable experience working with Yoyo Media Square Company, where I contributed to frontend work for the company's website. This experience helped me develop a keen eye for detail and a deep understanding of the technical landscape in Hyderabad. My approach to work is characterized by creativity, problem-solving abilities, and teamwork, and I am always eager to learn and adapt to new challenges.
+        </p>
+        <p>
+            In my free time, I enjoy discovering new things, working on potential patents, reading books, and listening to music. These activities help me stay balanced and inspired. I am excited to bring my expertise and enthusiasm to new opportunities and look forward to making meaningful contributions to the teams I work with.
+        </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2>Skills</h2>
+        <ul id="skills-list">
+            <li><img src="skill1.jpg" alt="Reading Books"> Reading Books</li>
+            <li><img src="skill2.jpg" alt="Navigate with Map and Compass"> Navigate with Map and Compass</li>
+            <li><img src="skill3.jpg" alt="How to Hunt"> How to Hunt</li>
+            <li><img src="skill4.jpg" alt="Listening to Music"> Listening to Music</li>
+        </ul>
+        <form id="skills-form">
+            <input type="text" id="new-skill-name" placeholder="Skill Name">
+            <input type="text" id="new-skill-image" placeholder="Skill Image URL">
+            <button type="submit">Add Skill</button>
+        </form>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <div id="projects-list">
+            <div class="project">
+                <h3>Yoyo Media Square Company</h3>
+                <p>Contributed to frontend work for the company's website, developing a keen eye for detail and a deep understanding of the technical landscape in Hyderabad.</p>
+            </div>
+            <div class="project">
+                <h3>Montessori High School</h3>
+                <ul>
+                    <li>Created a robot with my team that assists in serving items and performing small tasks like welcoming people.</li>
+                    <li>Participated in a team project analyzing how sperm ejaculation reduces men's stress.</li>
+                </ul>
+            </div>
+            <div class="project">
+                <h3>Lovely Professional University Polytechnic Department of CSE</h3>
+                <ul>
+                    <li>Developed a movie ticket booking process website.</li>
+                    <li>Created a fully functional website with indirect backend work.</li>
+                    <li>Designed a combined hardware and software stick using Arduino for blind people.</li>
+                </ul>
+            </div>
+            <div class="project">
+                <h3>New Project Title</h3>
+                <p>Detailed description of the new project and its impact.</p>
+            </div>
+        </div>
+        <form id="projects-form">
+            <input type="text" id="new-project-title" placeholder="Project Title">
+            <textarea id="new-project-description" placeholder="Project Description"></textarea>
+            <button type="submit">Add Project</button>
+        </form>
+    </section>
+
+    <!-- Recommendations Section -->
+    <section id="recommendations">
+        <h2>Recommendations</h2>
+        <ul id="recommendations-list">
+            <li>
+                <blockquote>
+                    "Tejeshwara is a highly skilled and dedicated professional. His ability to tackle complex problems with creative solutions has been a great asset to our team. His enthusiasm and positive attitude make him a pleasure to work with."
+                    <cite>– John Doe, Manager at Yoyo Media Square</cite>
+                </blockquote>
+            </li>
+            <li>
+                <blockquote>
+                    "Tejeshwara's innovative thinking and dedication to continuous improvement are truly impressive. He consistently goes above and beyond to deliver exceptional results and is always willing to help his colleagues."
+                    <cite>– Michael Brown, Colleague at Yoyo Media Square</cite>
+                </blockquote>
+            </li>
+            <li>
+                <blockquote>
+                    "Working with Tejeshwara on our project was a fantastic experience. He brings a high level of expertise and attention to detail, ensuring that every aspect of the project is handled with care and precision."
+                    <cite>– Jane Smith, Teacher at Montessori High School</cite>
+                </blockquote>
+            </li>
+            <li>
+                <blockquote>
+                    "Tejeshwara's dedication to his studies and projects in the Polytechnic Department of CSE at Lovely Professional University is truly commendable. His innovative approach and problem-solving skills have greatly benefited our team."
+                    <cite>– Dr. Rajesh Kumar, Professor at Lovely Professional University</cite>
+                </blockquote>
+            </li>
+            <li>
+                <blockquote>
+                    "Tejeshwara's contributions to our new project were outstanding. His technical expertise and ability to collaborate effectively made a significant difference."
+                    <cite>– Sarah Lee, Project Manager</cite>
+                </blockquote>
+            </li>
+        </ul>
+        <form id="recommendation-form">
+            <input type="text" id="new-recommendation" placeholder="Add a recommendation">
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
