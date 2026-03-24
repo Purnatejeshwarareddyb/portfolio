@@ -880,7 +880,7 @@ footer{background:rgba(5,9,18,.95);border-top:1px solid var(--border);padding:40
   <div class="container">
     <div class="sec-head reveal">
       <span class="sec-tag">// HALL_OF_FAME.DAT</span>
-      <h2 class="sec-title">Achievements & <span class="ac">Honours</span></h2>
+      <h2 class="sec-title">Achievements  <span class="ac"></span></h2>
       <div class="sec-line"></div>
     </div>
     <div class="grid g3" style="max-width:880px;margin:0 auto">
@@ -912,7 +912,7 @@ footer{background:rgba(5,9,18,.95);border-top:1px solid var(--border);padding:40
         <div class="cp-plat">HackerRank</div>
         <div class="cp-stats">
           <div>
-            <span class="cp-stat-v" data-count="882">0</span>
+            <span class="cp-stat-v" data-count="1">0</span>
             <span class="cp-stat-l">Global Rank</span>
           </div>
           <div>
@@ -924,6 +924,25 @@ footer{background:rgba(5,9,18,.95);border-top:1px solid var(--border);padding:40
           View Profile →
         </a>
       </div>
+      <!-- HackerRank -->
+      <div class="card cp-card reveal">
+        <div class="cp-ico hk"><i class="fas fa-code"></i></div>
+        <div class="cp-plat">HackerRank</div>
+        <div class="cp-stats">
+          <div>
+            <span class="cp-stat-v" data-count="882">0</span>
+            <span class="cp-stat-l">Global Rank</span>
+          </div>
+          <div>
+            <span class="cp-stat-v" data-count="433">0</span>
+            <span class="cp-stat-l">python</span>
+          </div>
+        </div>
+        <a href="https://www.hackerrank.com/profile/tejab6902" target="_blank" class="cp-btn">
+          View Profile →
+        </a>
+      </div>
+
 
       <!-- LeetCode -->
       <div class="card cp-card reveal" style="transition-delay:.1s">
@@ -1107,20 +1126,27 @@ function closeMobile(){document.getElementById('mobile-menu').style.display='non
   },60);
 })();
 
-/* ══ SECTION TEXTURE BACKGROUNDS ══ */
-// Each section gets a unique exotic texture: marble, wood, diamond, space, galaxy, nebula, lava, aurora, crystal, deep ocean
-/* ══ LIVING BACKGROUND SYSTEM — each section has its own alive world ══ */
+/* ══ RED-BROWN ANIMATED BACKGROUND — applied to ALL sections ══ */
+/*
+ * A rich, animated red-brown mixed background featuring:
+ * - Deep crimson / burnt sienna / dark mahogany base tones
+ * - Slowly drifting glowing ember orbs (red, orange, brown hues)
+ * - Rising ember particles that float upward
+ * - Subtle cracked-earth vein lines that glow warm orange
+ * - A gentle pulsing heat shimmer overlay
+ */
+
 const sectionTextures = {
-  'hero-bg-canvas':              {type:'galaxy'},
-  'about-bg-canvas':             {type:'nebula'},
-  'education-bg-canvas':         {type:'aurora'},
-  'skills-bg-canvas':            {type:'matrix'},
-  'projects-bg-canvas':          {type:'lava'},
-  'experience-bg-canvas':        {type:'plasma'},
-  'certifications-bg-canvas':    {type:'diamond'},
-  'achievements-bg-canvas':      {type:'fire'},
-  'competitive-bg-canvas':       {type:'space'},
-  'contact-bg-canvas':           {type:'ocean'},
+  'hero-bg-canvas':              {type:'redbrown'},
+  'about-bg-canvas':             {type:'redbrown'},
+  'education-bg-canvas':         {type:'redbrown'},
+  'skills-bg-canvas':            {type:'redbrown'},
+  'projects-bg-canvas':          {type:'redbrown'},
+  'experience-bg-canvas':        {type:'redbrown'},
+  'certifications-bg-canvas':    {type:'redbrown'},
+  'achievements-bg-canvas':      {type:'redbrown'},
+  'competitive-bg-canvas':       {type:'redbrown'},
+  'contact-bg-canvas':           {type:'redbrown'},
 };
 
 function initSectionBg(canvasId, config) {
@@ -1131,591 +1157,170 @@ function initSectionBg(canvasId, config) {
   let W, H, t = 0;
   function resize(){ W = canvas.width = sec.offsetWidth; H = canvas.height = sec.offsetHeight || 600; }
   resize(); window.addEventListener('resize', resize);
-  const type = config.type;
 
-  /* ── GALAXY: shooting stars + nebula clouds + spinning star clusters ── */
-  if (type === 'galaxy') {
-    const stars = Array.from({length:180}, () => ({
-      x:Math.random(), y:Math.random(), r:Math.random()*1.8+0.2,
-      hue:Math.random()*360, alpha:Math.random()*0.8+0.2,
-      phase:Math.random()*Math.PI*2, speed:Math.random()*0.025+0.005,
-      vx:(Math.random()-0.5)*0.0004, vy:(Math.random()-0.5)*0.0003
-    }));
-    const shoots = Array.from({length:8}, () => ({
-      x:Math.random(), y:Math.random(), len:0.08+Math.random()*0.18,
-      angle:-0.4+Math.random()*0.3, speed:0.006+Math.random()*0.008,
-      alpha:0, life:0, maxLife:60+Math.random()*80, hue:180+Math.random()*60
-    }));
-    const clouds = Array.from({length:6}, () => ({
-      x:Math.random(), y:Math.random(), r:0.2+Math.random()*0.35,
-      hue:200+Math.random()*160, phase:Math.random()*Math.PI*2,
-      speed:0.003+Math.random()*0.004, alpha:0.06+Math.random()*0.1
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      // Deep space base
-      const bg=ctx.createRadialGradient(W*0.5,H*0.5,0,W*0.5,H*0.5,Math.max(W,H)*0.7);
-      bg.addColorStop(0,'#060a1e'); bg.addColorStop(0.5,'#040818'); bg.addColorStop(1,'#020510');
-      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-      // Nebula clouds
-      clouds.forEach(c=>{
-        c.phase+=c.speed;
-        const cx=(c.x+Math.sin(c.phase*0.7)*0.12)*W, cy=(c.y+Math.cos(c.phase*0.5)*0.08)*H;
-        const r=c.r*Math.min(W,H);
-        const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-        g.addColorStop(0,`hsla(${c.hue},80%,35%,${c.alpha*1.5})`);
-        g.addColorStop(0.4,`hsla(${c.hue+30},70%,25%,${c.alpha*0.7})`);
-        g.addColorStop(1,`hsla(${c.hue},60%,15%,0)`);
-        ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-      });
-      // Stars twinkling + drifting
-      stars.forEach(s=>{
-        s.phase+=s.speed; s.x+=s.vx; s.y+=s.vy;
-        if(s.x<0)s.x=1; if(s.x>1)s.x=0; if(s.y<0)s.y=1; if(s.y>1)s.y=0;
-        const pulse=0.3+Math.sin(s.phase)*0.7;
-        const sx=s.x*W, sy=s.y*H;
-        if(Math.random()<0.001){ s.hue=(s.hue+60)%360; } // color shift
-        const sg=ctx.createRadialGradient(sx,sy,0,sx,sy,s.r*5);
-        sg.addColorStop(0,`hsla(${s.hue},100%,90%,${s.alpha*pulse})`);
-        sg.addColorStop(0.5,`hsla(${s.hue},90%,70%,${s.alpha*pulse*0.3})`);
-        sg.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=sg; ctx.beginPath(); ctx.arc(sx,sy,s.r*5,0,Math.PI*2); ctx.fill();
-        ctx.fillStyle=`hsla(${s.hue},100%,98%,${s.alpha*pulse})`;
-        ctx.beginPath(); ctx.arc(sx,sy,s.r*0.5,0,Math.PI*2); ctx.fill();
-      });
-      // Shooting stars
-      shoots.forEach(s=>{
-        s.life++;
-        if(s.life>s.maxLife){ s.life=0; s.x=Math.random(); s.y=Math.random()*0.5; s.alpha=0; s.maxLife=60+Math.random()*80; }
-        const prog=s.life/s.maxLife;
-        s.alpha = prog<0.1?prog*10 : prog>0.8?(1-prog)*5 : 1;
-        s.x+=s.speed; s.y+=s.speed*Math.tan(s.angle);
-        const x1=s.x*W, y1=s.y*H, x2=(s.x-Math.cos(s.angle)*s.len)*W, y2=(s.y-Math.sin(s.angle)*s.len)*H;
-        const sg2=ctx.createLinearGradient(x2,y2,x1,y1);
-        sg2.addColorStop(0,'rgba(255,255,255,0)');
-        sg2.addColorStop(0.7,`hsla(${s.hue},100%,85%,${s.alpha*0.5})`);
-        sg2.addColorStop(1,`hsla(${s.hue},100%,100%,${s.alpha})`);
-        ctx.beginPath(); ctx.moveTo(x2,y2); ctx.lineTo(x1,y1);
-        ctx.strokeStyle=sg2; ctx.lineWidth=1.5; ctx.stroke();
-      });
-      // Milky Way band
-      const mwG=ctx.createLinearGradient(0,H*0.3,W,H*0.7);
-      mwG.addColorStop(0,'rgba(60,80,160,0)'); mwG.addColorStop(0.3,`rgba(80,100,200,${0.04+Math.sin(t*0.005)*0.02})`);
-      mwG.addColorStop(0.5,`rgba(100,80,180,${0.06+Math.sin(t*0.004)*0.02})`); mwG.addColorStop(0.7,'rgba(80,100,200,0.03)'); mwG.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=mwG; ctx.fillRect(0,0,W,H);
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── NEBULA: massive colour morphing orbs, electric arcs ── */
-  if (type === 'nebula') {
-    const orbs = Array.from({length:8}, (_, i) => ({
-      x:0.1+Math.random()*0.8, y:0.1+Math.random()*0.8,
-      r:0.15+Math.random()*0.3, hue:260+i*25,
-      vx:(Math.random()-0.5)*0.0018, vy:(Math.random()-0.5)*0.0012,
-      phase:Math.random()*Math.PI*2, speed:0.008+Math.random()*0.006,
-      alpha:0.12+Math.random()*0.18
-    }));
-    const arcs = Array.from({length:12}, () => ({
-      x1:Math.random(), y1:Math.random(), x2:Math.random(), y2:Math.random(),
-      hue:200+Math.random()*160, alpha:0, life:0, maxLife:40+Math.random()*60,
-      segments:4+Math.floor(Math.random()*4)
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      ctx.fillStyle='#050815'; ctx.fillRect(0,0,W,H);
-      // Moving colour orbs
-      orbs.forEach(o=>{
-        o.phase+=o.speed; o.x+=o.vx; o.y+=o.vy;
-        if(o.x<0.05||o.x>0.95)o.vx*=-1; if(o.y<0.05||o.y>0.95)o.vy*=-1;
-        o.hue=(o.hue+0.3)%360;
-        const cx=o.x*W, cy=o.y*H, r=o.r*Math.min(W,H)*(0.85+Math.sin(o.phase)*0.15);
-        const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-        g.addColorStop(0,`hsla(${o.hue},90%,40%,${o.alpha*1.8})`);
-        g.addColorStop(0.3,`hsla(${o.hue+40},80%,30%,${o.alpha})`);
-        g.addColorStop(0.7,`hsla(${o.hue+80},70%,20%,${o.alpha*0.4})`);
-        g.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-      });
-      // Electric arc lightning
-      arcs.forEach(a=>{
-        a.life++;
-        if(a.life>a.maxLife){ a.life=0; a.x1=Math.random(); a.y1=Math.random(); a.x2=Math.random(); a.y2=Math.random(); a.hue=200+Math.random()*160; a.segments=4+Math.floor(Math.random()*4); }
-        const prog=a.life/a.maxLife;
-        a.alpha=prog<0.15?prog/0.15:prog>0.7?(1-prog)/0.3:1;
-        if(a.alpha<=0)return;
-        const pts=[{x:a.x1*W,y:a.y1*H}];
-        for(let i=1;i<a.segments;i++){
-          const f=i/a.segments;
-          pts.push({x:(a.x1+(a.x2-a.x1)*f)*W+(Math.random()-0.5)*60, y:(a.y1+(a.y2-a.y1)*f)*H+(Math.random()-0.5)*50});
-        }
-        pts.push({x:a.x2*W,y:a.y2*H});
-        ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y);
-        pts.slice(1).forEach(p=>ctx.lineTo(p.x,p.y));
-        ctx.strokeStyle=`hsla(${a.hue},100%,75%,${a.alpha*0.5})`; ctx.lineWidth=3; ctx.stroke();
-        ctx.strokeStyle=`hsla(${a.hue},100%,95%,${a.alpha*0.9})`; ctx.lineWidth=1; ctx.stroke();
-      });
-      // Scanlines for depth
-      for(let y=0;y<H;y+=4){ ctx.fillStyle=`rgba(0,0,0,0.04)`; ctx.fillRect(0,y,W,2); }
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── AURORA: massive sweeping curtains of colour ── */
-  if (type === 'aurora') {
-    const bands = Array.from({length:7}, (_, i) => ({
-      hue: 100+i*25, phase: Math.random()*Math.PI*2,
-      speed: 0.012+Math.random()*0.01, amp: 0.12+Math.random()*0.15,
-      freq: 1.5+Math.random()*2, yBase: 0.1+i*0.12,
-      width: 0.1+Math.random()*0.14, alpha: 0.08+Math.random()*0.12
-    }));
-    const particles2 = Array.from({length:60}, () => ({
-      x:Math.random(), y:Math.random()+0.3, size:1+Math.random()*3,
-      vx:(Math.random()-0.5)*0.0006, vy:-0.0005-Math.random()*0.001,
-      hue:100+Math.random()*80, alpha:Math.random()*0.7+0.2, phase:Math.random()*Math.PI*2
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      const bg2=ctx.createLinearGradient(0,0,0,H);
-      bg2.addColorStop(0,'#020c10'); bg2.addColorStop(0.4,'#041218'); bg2.addColorStop(1,'#030e0a');
-      ctx.fillStyle=bg2; ctx.fillRect(0,0,W,H);
-      // Aurora curtains — draw as filled wave shapes
-      bands.forEach(b=>{
-        b.phase+=b.speed;
-        b.hue=(b.hue+0.2)%360;
-        ctx.beginPath();
-        ctx.moveTo(0, b.yBase*H);
-        for(let xi=0;xi<=W;xi+=6){
-          const wave=Math.sin(xi/W*b.freq*Math.PI*2+b.phase)*b.amp*H + Math.sin(xi/W*b.freq*0.5*Math.PI*2+b.phase*1.3)*b.amp*H*0.4;
-          ctx.lineTo(xi, b.yBase*H+wave);
-        }
-        for(let xi=W;xi>=0;xi-=6){
-          const wave2=Math.sin(xi/W*b.freq*Math.PI*2+b.phase)*b.amp*H + Math.sin(xi/W*b.freq*0.5*Math.PI*2+b.phase*1.3)*b.amp*H*0.4;
-          ctx.lineTo(xi, b.yBase*H+wave2+b.width*H);
-        }
-        ctx.closePath();
-        const ag=ctx.createLinearGradient(0,b.yBase*H-b.amp*H,0,b.yBase*H+b.amp*H+b.width*H);
-        ag.addColorStop(0,`hsla(${b.hue},100%,60%,0)`);
-        ag.addColorStop(0.3,`hsla(${b.hue},100%,65%,${b.alpha*1.6})`);
-        ag.addColorStop(0.6,`hsla(${b.hue+40},90%,55%,${b.alpha})`);
-        ag.addColorStop(1,`hsla(${b.hue+60},80%,45%,0)`);
-        ctx.fillStyle=ag; ctx.fill();
-      });
-      // Glowing particles rising up
-      particles2.forEach(p=>{
-        p.phase+=0.04; p.x+=p.vx; p.y+=p.vy;
-        if(p.y<0)p.y=1; if(p.x<0)p.x=1; if(p.x>1)p.x=0;
-        const pulse=0.5+Math.sin(p.phase)*0.5;
-        ctx.fillStyle=`hsla(${p.hue},100%,80%,${p.alpha*pulse*0.6})`;
-        ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.size,0,Math.PI*2); ctx.fill();
-      });
-      // Stars peeking through
-      if(t%3===0){
-        ctx.fillStyle=`rgba(255,255,255,${0.04+Math.random()*0.06})`;
-        ctx.beginPath(); ctx.arc(Math.random()*W,Math.random()*H*0.4,0.8,0,Math.PI*2); ctx.fill();
-      }
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── MATRIX: falling digital rain ── */
-  if (type === 'matrix') {
-    const cols = Math.floor(W/16)||60;
-    const drops = Array.from({length:cols}, () => ({y:-Math.random()*40, speed:0.3+Math.random()*0.7, hue:Math.random()<0.7?180:280}));
-    const glowOrbs = Array.from({length:5}, () => ({x:Math.random(),y:Math.random(),r:0.15+Math.random()*0.2,hue:180+Math.random()*100,phase:Math.random()*Math.PI*2,speed:0.006}));
-    function draw(){
-      t++;
-      ctx.fillStyle='rgba(5,8,20,0.25)'; ctx.fillRect(0,0,W,H);
-      // Orbs pulsing
-      glowOrbs.forEach(o=>{
-        o.phase+=o.speed; o.hue=(o.hue+0.15)%360;
-        const cx=(o.x+Math.sin(o.phase*0.7)*0.1)*W, cy=(o.y+Math.cos(o.phase*0.5)*0.08)*H;
-        const r=o.r*Math.min(W,H)*(0.8+Math.sin(o.phase)*0.2);
-        const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-        g.addColorStop(0,`hsla(${o.hue},90%,35%,0.15)`); g.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-      });
-      // Digital rain
-      const colW=W/(drops.length||60);
-      ctx.font=`${12+(W>600?2:0)}px Share Tech Mono`;
-      drops.forEach((d,i)=>{
-        d.y+=d.speed;
-        const chars='01アイウエオカキクケコサシスセソタチ∑∏∫≈≠∞⟨⟩';
-        const ch=chars[Math.floor(Math.random()*chars.length)];
-        const x=i*colW+colW/2;
-        // Bright head
-        ctx.fillStyle=`hsla(${d.hue},100%,85%,0.9)`;
-        ctx.textAlign='center'; ctx.fillText(ch,x,d.y*20);
-        // Trail glow
-        ctx.fillStyle=`hsla(${d.hue},90%,55%,0.5)`;
-        ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,(d.y-1)*20);
-        ctx.fillStyle=`hsla(${d.hue},80%,35%,0.25)`;
-        ctx.fillText(chars[Math.floor(Math.random()*chars.length)],x,(d.y-2)*20);
-        if(d.y*20>H+80) d.y=-Math.random()*20;
-      });
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── LAVA: boiling hot bubbles + rising blobs ── */
-  if (type === 'lava') {
-    const blobs2 = Array.from({length:14}, () => ({
-      x:Math.random(), y:0.6+Math.random()*0.6, r:0.04+Math.random()*0.1,
-      hue:Math.random()<0.5?0+Math.random()*30:340+Math.random()*20,
-      vx:(Math.random()-0.5)*0.0025, vy:-(0.0008+Math.random()*0.0015),
-      phase:Math.random()*Math.PI*2, wobble:0.01+Math.random()*0.02
-    }));
-    const cracks = Array.from({length:8}, () => ({
-      x:Math.random(), y:Math.random(), angle:Math.random()*Math.PI, len:0.05+Math.random()*0.12,
-      alpha:0.3+Math.random()*0.4, hue:20+Math.random()*30, pulse:Math.random()*Math.PI*2
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      // Lava base gradient
-      const bg3=ctx.createLinearGradient(0,0,0,H);
-      bg3.addColorStop(0,'#0a0408'); bg3.addColorStop(0.5,'#180808'); bg3.addColorStop(1,'#2a0c04');
-      ctx.fillStyle=bg3; ctx.fillRect(0,0,W,H);
-      // Glowing cracks
-      cracks.forEach(c=>{
-        c.pulse+=0.04;
-        const gAlpha=c.alpha*(0.5+Math.sin(c.pulse)*0.5);
-        const x1=c.x*W, y1=c.y*H;
-        const x2=x1+Math.cos(c.angle)*c.len*W, y2=y1+Math.sin(c.angle)*c.len*H;
-        const cg=ctx.createLinearGradient(x1,y1,x2,y2);
-        cg.addColorStop(0,`hsla(${c.hue},100%,70%,0)`);
-        cg.addColorStop(0.5,`hsla(${c.hue},100%,65%,${gAlpha})`);
-        cg.addColorStop(1,`hsla(${c.hue},100%,50%,0)`);
-        ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
-        ctx.strokeStyle=cg; ctx.lineWidth=1.5+Math.sin(c.pulse)*0.5; ctx.stroke();
-        // Crack glow
-        const cgg=ctx.createRadialGradient((x1+x2)/2,(y1+y2)/2,0,(x1+x2)/2,(y1+y2)/2,30);
-        cgg.addColorStop(0,`hsla(${c.hue},100%,65%,${gAlpha*0.4})`); cgg.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=cgg; ctx.beginPath(); ctx.arc((x1+x2)/2,(y1+y2)/2,30,0,Math.PI*2); ctx.fill();
-      });
-      // Rising lava blobs
-      blobs2.forEach(b=>{
-        b.phase+=b.wobble; b.x+=b.vx+Math.sin(b.phase)*0.002; b.y+=b.vy;
-        if(b.y<-0.15){b.y=1.1+Math.random()*0.2; b.x=Math.random(); b.hue=Math.random()<0.5?0+Math.random()*30:340+Math.random()*20;}
-        if(b.x<0||b.x>1)b.vx*=-1;
-        const bx=b.x*W, by=b.y*H;
-        const br=b.r*Math.min(W,H)*(0.8+Math.sin(b.phase)*0.2);
-        const bg4=ctx.createRadialGradient(bx,by,0,bx,by,br);
-        bg4.addColorStop(0,`hsla(${b.hue},100%,70%,0.7)`);
-        bg4.addColorStop(0.4,`hsla(${b.hue+15},100%,50%,0.4)`);
-        bg4.addColorStop(0.8,`hsla(${b.hue+30},100%,30%,0.15)`);
-        bg4.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=bg4; ctx.beginPath(); ctx.arc(bx,by,br,0,Math.PI*2); ctx.fill();
-      });
-      // Heat shimmer overlay
-      const hs=ctx.createLinearGradient(0,H*0.6,0,H);
-      hs.addColorStop(0,'rgba(0,0,0,0)'); hs.addColorStop(1,`rgba(40,8,0,${0.08+Math.sin(t*0.03)*0.04})`);
-      ctx.fillStyle=hs; ctx.fillRect(0,0,W,H);
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── PLASMA: electric morphing energy field ── */
-  if (type === 'plasma') {
-    const energy = Array.from({length:10}, () => ({
-      x:Math.random(), y:Math.random(), r:0.12+Math.random()*0.25,
-      hue:40+Math.random()*80, vx:(Math.random()-0.5)*0.0022, vy:(Math.random()-0.5)*0.0018,
-      phase:Math.random()*Math.PI*2, speed:0.015+Math.random()*0.012, alpha:0.15+Math.random()*0.2
-    }));
-    const bolts = Array.from({length:6}, () => ({active:false,life:0,maxLife:25,x1:0,y1:0,x2:0,y2:0,hue:40}));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      ctx.fillStyle='#06080a'; ctx.fillRect(0,0,W,H);
-      energy.forEach(e=>{
-        e.phase+=e.speed; e.x+=e.vx+Math.sin(e.phase*0.7)*0.0012; e.y+=e.vy+Math.cos(e.phase*0.5)*0.0009;
-        if(e.x<0.05||e.x>0.95)e.vx*=-1; if(e.y<0.05||e.y>0.95)e.vy*=-1;
-        e.hue=(e.hue+0.4)%360;
-        const cx=e.x*W, cy=e.y*H, r=e.r*Math.min(W,H)*(0.8+Math.sin(e.phase)*0.2);
-        const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-        g.addColorStop(0,`hsla(${e.hue},100%,60%,${e.alpha*2})`);
-        g.addColorStop(0.3,`hsla(${e.hue+30},100%,45%,${e.alpha})`);
-        g.addColorStop(0.7,`hsla(${e.hue+60},90%,30%,${e.alpha*0.4})`);
-        g.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
-      });
-      // Plasma bolts between orbs
-      if(t%15===0){
-        const b=bolts[Math.floor(Math.random()*bolts.length)];
-        const a=energy[Math.floor(Math.random()*energy.length)], b2=energy[Math.floor(Math.random()*energy.length)];
-        b.x1=a.x*W; b.y1=a.y*H; b.x2=b2.x*W; b.y2=b2.y*H; b.hue=(a.hue+b2.hue)/2; b.active=true; b.life=0;
-      }
-      bolts.forEach(b=>{
-        if(!b.active)return; b.life++;
-        if(b.life>b.maxLife){b.active=false;return;}
-        const prog=1-b.life/b.maxLife;
-        const pts=[{x:b.x1,y:b.y1}];
-        for(let i=1;i<6;i++){ pts.push({x:b.x1+(b.x2-b.x1)*i/6+(Math.random()-0.5)*40,y:b.y1+(b.y2-b.y1)*i/6+(Math.random()-0.5)*35}); }
-        pts.push({x:b.x2,y:b.y2});
-        ctx.beginPath(); ctx.moveTo(pts[0].x,pts[0].y); pts.slice(1).forEach(p=>ctx.lineTo(p.x,p.y));
-        ctx.strokeStyle=`hsla(${b.hue},100%,85%,${prog*0.8})`; ctx.lineWidth=2; ctx.stroke();
-        ctx.strokeStyle=`hsla(${b.hue},100%,100%,${prog*0.4})`; ctx.lineWidth=4; ctx.stroke();
-      });
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── DIAMOND: spinning crystal facets with light beams ── */
-  if (type === 'diamond') {
-    const crystals = Array.from({length:18}, () => ({
-      x:Math.random(), y:Math.random(), size:(0.04+Math.random()*0.09)*Math.min(800,600),
-      angle:Math.random()*Math.PI*2, rotSpeed:(Math.random()-0.5)*0.018,
-      hue:180+Math.random()*80, alpha:0.15+Math.random()*0.25,
-      vx:(Math.random()-0.5)*0.0015, vy:(Math.random()-0.5)*0.001
-    }));
-    const beams = Array.from({length:8}, () => ({
-      x:Math.random(), angle:Math.random()*Math.PI*2, speed:0.005+Math.random()*0.008,
-      hue:180+Math.random()*80, alpha:0.04+Math.random()*0.06, width:1+Math.random()*3
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      const bg5=ctx.createLinearGradient(0,0,W,H);
-      bg5.addColorStop(0,'#050c18'); bg5.addColorStop(1,'#040a14');
-      ctx.fillStyle=bg5; ctx.fillRect(0,0,W,H);
-      // Light beams sweeping
-      beams.forEach(b=>{
-        b.angle+=b.speed;
-        const bx=b.x*W, by=H*0.5;
-        ctx.save(); ctx.translate(bx,by);
-        const bg6=ctx.createLinearGradient(0,-H,0,H);
-        bg6.addColorStop(0,`hsla(${b.hue},100%,80%,0)`);
-        bg6.addColorStop(0.4,`hsla(${b.hue},100%,80%,${b.alpha})`);
-        bg6.addColorStop(0.5,`hsla(${b.hue},100%,90%,${b.alpha*1.5})`);
-        bg6.addColorStop(0.6,`hsla(${b.hue},100%,80%,${b.alpha})`);
-        bg6.addColorStop(1,`hsla(${b.hue},100%,80%,0)`);
-        ctx.rotate(b.angle);
-        ctx.fillStyle=bg6; ctx.beginPath(); ctx.rect(-b.width/2,-H,b.width,H*2); ctx.fill();
-        ctx.restore();
-      });
-      // Spinning crystals
-      crystals.forEach(c=>{
-        c.angle+=c.rotSpeed; c.x+=c.vx; c.y+=c.vy;
-        if(c.x<0.03||c.x>0.97)c.vx*=-1; if(c.y<0.03||c.y>0.97)c.vy*=-1;
-        c.hue=(c.hue+0.3)%360;
-        const cx=c.x*W, cy=c.y*H, s=c.size;
-        ctx.save(); ctx.translate(cx,cy); ctx.rotate(c.angle);
-        // Diamond shape
-        const dg2=ctx.createLinearGradient(-s,-s,s,s);
-        dg2.addColorStop(0,`hsla(${c.hue},100%,90%,0)`);
-        dg2.addColorStop(0.25,`hsla(${c.hue},100%,85%,${c.alpha*2})`);
-        dg2.addColorStop(0.5,`hsla(${c.hue+40},100%,95%,${c.alpha*2.5})`);
-        dg2.addColorStop(0.75,`hsla(${c.hue+80},100%,80%,${c.alpha*1.5})`);
-        dg2.addColorStop(1,`hsla(${c.hue+80},100%,70%,0)`);
-        ctx.beginPath(); ctx.moveTo(0,-s); ctx.lineTo(s*0.6,0); ctx.lineTo(0,s); ctx.lineTo(-s*0.6,0); ctx.closePath();
-        ctx.fillStyle=dg2; ctx.fill();
-        ctx.strokeStyle=`hsla(${c.hue},100%,90%,${c.alpha*1.5})`; ctx.lineWidth=0.8; ctx.stroke();
-        // Inner reflection
-        ctx.beginPath(); ctx.moveTo(0,-s*0.5); ctx.lineTo(s*0.3,0); ctx.lineTo(0,s*0.5); ctx.lineTo(-s*0.3,0); ctx.closePath();
-        ctx.strokeStyle=`hsla(${c.hue+40},100%,100%,${c.alpha})`; ctx.lineWidth=0.4; ctx.stroke();
-        ctx.restore();
-        // Sparkle glow
-        const sg3=ctx.createRadialGradient(cx,cy,0,cx,cy,s*2.5);
-        sg3.addColorStop(0,`hsla(${c.hue},100%,90%,${c.alpha*0.8})`); sg3.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=sg3; ctx.beginPath(); ctx.arc(cx,cy,s*2.5,0,Math.PI*2); ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── FIRE: roaring flames ── */
-  if (type === 'fire') {
-    const flames = Array.from({length:60}, () => ({
-      x:Math.random(), y:0.8+Math.random()*0.4, size:0.02+Math.random()*0.06,
-      vx:(Math.random()-0.5)*0.003, vy:-(0.003+Math.random()*0.005),
-      hue:Math.random()*40, alpha:0.6+Math.random()*0.4, phase:Math.random()*Math.PI*2
-    }));
-    const embers = Array.from({length:40}, () => ({
-      x:Math.random(), y:0.6+Math.random()*0.5, r:1+Math.random()*3,
-      vx:(Math.random()-0.5)*0.002, vy:-(0.001+Math.random()*0.003),
-      hue:Math.random()*50, alpha:Math.random()*0.8+0.2, phase:Math.random()*Math.PI*2
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      const bg7=ctx.createLinearGradient(0,0,0,H);
-      bg7.addColorStop(0,'#050205'); bg7.addColorStop(0.6,'#120304'); bg7.addColorStop(1,'#1e0502');
-      ctx.fillStyle=bg7; ctx.fillRect(0,0,W,H);
-      // Flames
-      flames.forEach(f=>{
-        f.phase+=0.08; f.x+=f.vx+Math.sin(f.phase)*0.002; f.y+=f.vy;
-        if(f.y<-0.1)f.y=1.0+Math.random()*0.1;
-        if(f.x<0)f.x=1; if(f.x>1)f.x=0;
-        const alpha=f.alpha*(0.5+Math.sin(f.phase)*0.5)*Math.min(1,(1-f.y+0.2)*3);
-        const fx=f.x*W, fy=f.y*H, fs=f.size*Math.min(W,H);
-        const fg2=ctx.createRadialGradient(fx,fy,0,fx,fy,fs);
-        fg2.addColorStop(0,`hsla(${f.hue+50},100%,85%,${alpha})`);
-        fg2.addColorStop(0.3,`hsla(${f.hue+20},100%,65%,${alpha*0.7})`);
-        fg2.addColorStop(0.7,`hsla(${f.hue},100%,45%,${alpha*0.3})`);
-        fg2.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=fg2; ctx.beginPath(); ctx.arc(fx,fy,fs,0,Math.PI*2); ctx.fill();
-      });
-      // Embers
-      embers.forEach(e=>{
-        e.phase+=0.06; e.x+=e.vx; e.y+=e.vy;
-        if(e.y<-0.05)e.y=0.9+Math.random()*0.15;
-        if(e.x<0)e.x=1; if(e.x>1)e.x=0;
-        const ep=0.3+Math.sin(e.phase)*0.7;
-        ctx.fillStyle=`hsla(${e.hue},100%,75%,${e.alpha*ep})`;
-        ctx.beginPath(); ctx.arc(e.x*W,e.y*H,e.r,0,Math.PI*2); ctx.fill();
-      });
-      // Fire base glow
-      const fg3=ctx.createLinearGradient(0,H*0.7,0,H);
-      fg3.addColorStop(0,'rgba(0,0,0,0)'); fg3.addColorStop(1,`rgba(80,20,5,${0.3+Math.sin(t*0.04)*0.1})`);
-      ctx.fillStyle=fg3; ctx.fillRect(0,0,W,H);
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── SPACE: warp speed stars + planet rings ── */
-  if (type === 'space') {
-    const warpStars = Array.from({length:200}, () => ({
-      x:Math.random(), y:Math.random(), z:Math.random(),
-      hue:Math.random()*360, size:Math.random()*2+0.5
-    }));
-    const rings = Array.from({length:3}, (_, i) => ({
-      cx:0.3+i*0.25, cy:0.4+Math.sin(i)*0.2, r:0.05+i*0.04,
-      hue:200+i*60, angle:Math.random()*Math.PI*2, speed:(0.01+i*0.005)*(i%2?1:-1)
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      ctx.fillStyle='#020408'; ctx.fillRect(0,0,W,H);
-      // Warp speed stars
-      warpStars.forEach(s=>{
-        s.z-=0.004;
-        if(s.z<=0)s.z=1;
-        const sx=(s.x-0.5)/(s.z)*W*0.5+W*0.5, sy=(s.y-0.5)/(s.z)*H*0.5+H*0.5;
-        if(sx<0||sx>W||sy<0||sy>H){s.z=1;return;}
-        const size=s.size*(1-s.z)*3;
-        const alpha=Math.min(1,(1-s.z)*1.5);
-        // Star trail
-        const prevZ=s.z+0.015;
-        const px=(s.x-0.5)/prevZ*W*0.5+W*0.5, py=(s.y-0.5)/prevZ*H*0.5+H*0.5;
-        ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(sx,sy);
-        ctx.strokeStyle=`hsla(${s.hue},90%,85%,${alpha*0.6})`; ctx.lineWidth=size*0.4; ctx.stroke();
-        // Star dot
-        ctx.fillStyle=`hsla(${s.hue},100%,96%,${alpha})`;
-        ctx.beginPath(); ctx.arc(sx,sy,size*0.5,0,Math.PI*2); ctx.fill();
-      });
-      // Orbital rings
-      rings.forEach(r=>{
-        r.angle+=r.speed;
-        const cx=r.cx*W, cy=r.cy*H, rad=r.r*Math.min(W,H);
-        for(let i=0;i<3;i++){
-          ctx.beginPath(); ctx.ellipse(cx,cy,rad*(1+i*0.15),rad*0.35*(1+i*0.1),r.angle,0,Math.PI*2);
-          ctx.strokeStyle=`hsla(${(r.hue+t*0.5)%360},100%,65%,${0.3-i*0.08})`; ctx.lineWidth=1.5-i*0.3; ctx.stroke();
-        }
-        // Planet core
-        const pg2=ctx.createRadialGradient(cx,cy,0,cx,cy,rad*0.4);
-        pg2.addColorStop(0,`hsla(${(r.hue+t*0.5)%360},80%,55%,0.6)`); pg2.addColorStop(1,`hsla(${(r.hue+t*0.5)%360},60%,30%,0.2)`);
-        ctx.fillStyle=pg2; ctx.beginPath(); ctx.arc(cx,cy,rad*0.4,0,Math.PI*2); ctx.fill();
-      });
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── OCEAN: deep water with bioluminescent waves ── */
-  if (type === 'ocean') {
-    const waves = Array.from({length:8}, (_, i) => ({
-      y:0.3+i*0.1, phase:Math.random()*Math.PI*2, speed:0.015+i*0.005,
-      amp:0.015+Math.random()*0.025, freq:1.5+Math.random()*2,
-      hue:180+i*8, alpha:0.06+Math.random()*0.09, width:0.06+Math.random()*0.08
-    }));
-    const bio = Array.from({length:45}, () => ({
-      x:Math.random(), y:0.3+Math.random()*0.7, r:2+Math.random()*5,
-      vx:(Math.random()-0.5)*0.0012, vy:(Math.random()-0.5)*0.0006,
-      hue:160+Math.random()*60, alpha:Math.random()*0.7+0.3, phase:Math.random()*Math.PI*2
-    }));
-    const bubbles = Array.from({length:25}, () => ({
-      x:Math.random(), y:0.5+Math.random()*0.6, r:2+Math.random()*6,
-      vy:-(0.0006+Math.random()*0.001), phase:Math.random()*Math.PI*2
-    }));
-    function draw(){
-      t++; ctx.clearRect(0,0,W,H);
-      const bg8=ctx.createLinearGradient(0,0,0,H);
-      bg8.addColorStop(0,'#020c12'); bg8.addColorStop(0.4,'#030e16'); bg8.addColorStop(1,'#020a10');
-      ctx.fillStyle=bg8; ctx.fillRect(0,0,W,H);
-      // Wave curtains
-      waves.forEach(w=>{
-        w.phase+=w.speed; w.hue=(w.hue+0.1)%360;
-        ctx.beginPath(); ctx.moveTo(0,w.y*H);
-        for(let xi=0;xi<=W;xi+=5){
-          const wy=Math.sin(xi/W*w.freq*Math.PI*2+w.phase)*w.amp*H + Math.sin(xi/W*w.freq*1.7*Math.PI+w.phase*0.7)*w.amp*H*0.4;
-          ctx.lineTo(xi,w.y*H+wy);
-        }
-        for(let xi=W;xi>=0;xi-=5){
-          const wy2=Math.sin(xi/W*w.freq*Math.PI*2+w.phase)*w.amp*H + Math.sin(xi/W*w.freq*1.7*Math.PI+w.phase*0.7)*w.amp*H*0.4;
-          ctx.lineTo(xi,w.y*H+wy2+w.width*H);
-        }
-        ctx.closePath();
-        const wg=ctx.createLinearGradient(0,w.y*H,0,w.y*H+w.width*H);
-        wg.addColorStop(0,`hsla(${w.hue},100%,60%,0)`);
-        wg.addColorStop(0.4,`hsla(${w.hue},100%,65%,${w.alpha*1.8})`);
-        wg.addColorStop(0.6,`hsla(${w.hue+20},90%,55%,${w.alpha})`);
-        wg.addColorStop(1,`hsla(${w.hue+30},80%,45%,0)`);
-        ctx.fillStyle=wg; ctx.fill();
-      });
-      // Bioluminescent particles
-      bio.forEach(b=>{
-        b.phase+=0.03; b.x+=b.vx; b.y+=b.vy;
-        if(b.x<0)b.x=1; if(b.x>1)b.x=0; if(b.y<0.2)b.y=1; if(b.y>1.05)b.y=0.25;
-        const pulse=0.4+Math.sin(b.phase)*0.6;
-        const bx=b.x*W, by=b.y*H;
-        const bg9=ctx.createRadialGradient(bx,by,0,bx,by,b.r*3);
-        bg9.addColorStop(0,`hsla(${b.hue},100%,75%,${b.alpha*pulse})`);
-        bg9.addColorStop(0.5,`hsla(${b.hue},90%,60%,${b.alpha*pulse*0.4})`);
-        bg9.addColorStop(1,'rgba(0,0,0,0)');
-        ctx.fillStyle=bg9; ctx.beginPath(); ctx.arc(bx,by,b.r*3,0,Math.PI*2); ctx.fill();
-        ctx.fillStyle=`hsla(${b.hue},100%,90%,${b.alpha*pulse*0.8})`;
-        ctx.beginPath(); ctx.arc(bx,by,b.r*0.5,0,Math.PI*2); ctx.fill();
-      });
-      // Rising bubbles
-      bubbles.forEach(b=>{
-        b.phase+=0.05; b.y+=b.vy+Math.sin(b.phase)*0.0003;
-        if(b.y<-0.05){b.y=1.05; b.x=Math.random();}
-        const ba=0.1+Math.sin(b.phase)*0.15;
-        ctx.beginPath(); ctx.arc(b.x*W,b.y*H,b.r,0,Math.PI*2);
-        ctx.strokeStyle=`hsla(${190+Math.sin(b.phase)*20},80%,75%,${ba})`; ctx.lineWidth=0.8; ctx.stroke();
-      });
-      requestAnimationFrame(draw);
-    }
-    draw(); return;
-  }
-
-  /* ── DEFAULT FALLBACK: morphing colour blobs ── */
-  const blobs3 = Array.from({length:8}, () => ({
-    x:Math.random(), y:Math.random(), r:0.15+Math.random()*0.3,
-    hue:Math.random()*360, vx:(Math.random()-0.5)*0.002, vy:(Math.random()-0.5)*0.0015,
-    phase:Math.random()*Math.PI*2, speed:0.01+Math.random()*0.008, alpha:0.12+Math.random()*0.15
+  /* ── RED-BROWN: ember orbs + rising sparks + glowing veins + heat shimmer ── */
+  // Drifting ember glow orbs
+  const orbs = Array.from({length: 9}, (_, i) => ({
+    x: Math.random(),
+    y: Math.random(),
+    r: 0.12 + Math.random() * 0.28,
+    // Hues: deep red (0-15), crimson (340-360), burnt orange (18-30), sienna (20-35)
+    hue: [0, 5, 10, 350, 355, 20, 25, 15, 8][i % 9],
+    sat: 75 + Math.random() * 20,
+    lit: 18 + Math.random() * 20,
+    vx: (Math.random() - 0.5) * 0.0016,
+    vy: (Math.random() - 0.5) * 0.001,
+    phase: Math.random() * Math.PI * 2,
+    speed: 0.007 + Math.random() * 0.006,
+    alpha: 0.10 + Math.random() * 0.18,
   }));
-  function draw(){
-    t++; ctx.clearRect(0,0,W,H); ctx.fillStyle='#050810'; ctx.fillRect(0,0,W,H);
-    blobs3.forEach(b=>{
-      b.phase+=b.speed; b.x+=b.vx; b.y+=b.vy; b.hue=(b.hue+0.3)%360;
-      if(b.x<0.05||b.x>0.95)b.vx*=-1; if(b.y<0.05||b.y>0.95)b.vy*=-1;
-      const cx=b.x*W, cy=b.y*H, r=b.r*Math.min(W,H)*(0.85+Math.sin(b.phase)*0.15);
-      const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r);
-      g.addColorStop(0,`hsla(${b.hue},90%,45%,${b.alpha*2})`);
-      g.addColorStop(0.5,`hsla(${b.hue+40},80%,30%,${b.alpha})`);
-      g.addColorStop(1,'rgba(0,0,0,0)');
-      ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  // Rising ember sparks
+  const sparks = Array.from({length: 55}, () => ({
+    x: Math.random(),
+    y: 0.4 + Math.random() * 0.7,
+    r: 1.2 + Math.random() * 3.5,
+    vx: (Math.random() - 0.5) * 0.0014,
+    vy: -(0.0005 + Math.random() * 0.0013),
+    hue: Math.random() < 0.6 ? (Math.random() * 25) : (340 + Math.random() * 20),
+    alpha: 0.4 + Math.random() * 0.6,
+    phase: Math.random() * Math.PI * 2,
+    wobble: 0.02 + Math.random() * 0.03,
+  }));
+
+  // Glowing crack veins
+  const veins = Array.from({length: 10}, () => {
+    const x = Math.random();
+    const y = Math.random();
+    const ang = Math.random() * Math.PI;
+    const len = 0.04 + Math.random() * 0.14;
+    return {
+      x1: x, y1: y,
+      x2: x + Math.cos(ang) * len, y2: y + Math.sin(ang) * len,
+      hue: 10 + Math.random() * 25,
+      alpha: 0.18 + Math.random() * 0.28,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: 0.025 + Math.random() * 0.02,
+      width: 0.6 + Math.random() * 1.2,
+    };
+  });
+
+  function draw() {
+    t++;
+    ctx.clearRect(0, 0, W, H);
+
+    // ── 1. Deep red-brown base gradient ──
+    const bg = ctx.createRadialGradient(W * 0.5, H * 0.4, 0, W * 0.5, H * 0.5, Math.max(W, H) * 0.85);
+    bg.addColorStop(0,  '#1a0505');
+    bg.addColorStop(0.3,'#120304');
+    bg.addColorStop(0.6,'#0e0202');
+    bg.addColorStop(1,  '#080101');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // ── 2. Slow-moving colour wash (warm red-brown tones cycling) ──
+    const wash = ctx.createLinearGradient(
+      W * (0.3 + Math.sin(t * 0.003) * 0.2),
+      0,
+      W * (0.7 + Math.cos(t * 0.0025) * 0.2),
+      H
+    );
+    const washHue1 = 5 + Math.sin(t * 0.004) * 10;
+    const washHue2 = 20 + Math.cos(t * 0.003) * 12;
+    wash.addColorStop(0, `hsla(${washHue1},80%,12%,0.55)`);
+    wash.addColorStop(0.4, `hsla(${washHue2},70%,10%,0.35)`);
+    wash.addColorStop(0.7, `hsla(${washHue1 - 5},75%,8%,0.45)`);
+    wash.addColorStop(1, `hsla(${washHue2 + 5},65%,6%,0.3)`);
+    ctx.fillStyle = wash;
+    ctx.fillRect(0, 0, W, H);
+
+    // ── 3. Ember glow orbs drifting ──
+    orbs.forEach(o => {
+      o.phase += o.speed;
+      o.x += o.vx + Math.sin(o.phase * 0.6) * 0.0009;
+      o.y += o.vy + Math.cos(o.phase * 0.4) * 0.0006;
+      if (o.x < 0.04 || o.x > 0.96) o.vx *= -1;
+      if (o.y < 0.04 || o.y > 0.96) o.vy *= -1;
+      // Subtle hue shift — stays in red-brown family
+      o.hue = ((o.hue + 0.08) % 40 + (o.hue >= 340 ? 340 : 0));
+      const pulse = 0.7 + Math.sin(o.phase) * 0.3;
+      const cx = o.x * W, cy = o.y * H;
+      const r = o.r * Math.min(W, H) * (0.8 + Math.sin(o.phase * 0.7) * 0.2);
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, `hsla(${o.hue},${o.sat}%,${o.lit + 10}%,${o.alpha * pulse * 2.2})`);
+      g.addColorStop(0.35, `hsla(${o.hue + 8},${o.sat - 10}%,${o.lit}%,${o.alpha * pulse * 1.1})`);
+      g.addColorStop(0.7, `hsla(${o.hue + 15},${o.sat - 20}%,${o.lit - 5}%,${o.alpha * pulse * 0.4})`);
+      g.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, W, H);
     });
+
+    // ── 4. Glowing crack veins ──
+    veins.forEach(v => {
+      v.pulse += v.pulseSpeed;
+      const gAlpha = v.alpha * (0.45 + Math.sin(v.pulse) * 0.55);
+      const x1 = v.x1 * W, y1 = v.y1 * H;
+      const x2 = v.x2 * W, y2 = v.y2 * H;
+      // Outer glow
+      const vg = ctx.createLinearGradient(x1, y1, x2, y2);
+      vg.addColorStop(0, `hsla(${v.hue},100%,55%,0)`);
+      vg.addColorStop(0.3, `hsla(${v.hue},100%,60%,${gAlpha * 0.7})`);
+      vg.addColorStop(0.5, `hsla(${v.hue + 10},100%,65%,${gAlpha})`);
+      vg.addColorStop(0.7, `hsla(${v.hue},100%,55%,${gAlpha * 0.6})`);
+      vg.addColorStop(1, `hsla(${v.hue},100%,45%,0)`);
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2);
+      ctx.strokeStyle = vg; ctx.lineWidth = v.width * 3.5; ctx.globalAlpha = 0.35; ctx.stroke();
+      // Bright core
+      ctx.strokeStyle = vg; ctx.lineWidth = v.width; ctx.globalAlpha = 1; ctx.stroke();
+      ctx.globalAlpha = 1;
+      // Point glow at midpoint
+      const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+      const pg = ctx.createRadialGradient(mx, my, 0, mx, my, 22);
+      pg.addColorStop(0, `hsla(${v.hue + 5},100%,65%,${gAlpha * 0.5})`);
+      pg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = pg; ctx.beginPath(); ctx.arc(mx, my, 22, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // ── 5. Rising ember sparks ──
+    sparks.forEach(s => {
+      s.phase += s.wobble;
+      s.x += s.vx + Math.sin(s.phase) * 0.0008;
+      s.y += s.vy;
+      if (s.y < -0.05) { s.y = 1.05 + Math.random() * 0.1; s.x = Math.random(); }
+      if (s.x < 0) s.x = 1; if (s.x > 1) s.x = 0;
+      // Fade out as they rise
+      const fadeFactor = Math.min(1, s.y * 3.5);
+      const pulse = 0.5 + Math.sin(s.phase * 2) * 0.5;
+      const sx = s.x * W, sy = s.y * H;
+      // Outer glow
+      const sg = ctx.createRadialGradient(sx, sy, 0, sx, sy, s.r * 3.5);
+      sg.addColorStop(0, `hsla(${s.hue},100%,72%,${s.alpha * pulse * fadeFactor})`);
+      sg.addColorStop(0.4, `hsla(${s.hue + 10},100%,55%,${s.alpha * pulse * fadeFactor * 0.4})`);
+      sg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(sx, sy, s.r * 3.5, 0, Math.PI * 2); ctx.fill();
+      // Bright core dot
+      ctx.fillStyle = `hsla(${s.hue},100%,88%,${s.alpha * pulse * fadeFactor * 0.9})`;
+      ctx.beginPath(); ctx.arc(sx, sy, s.r * 0.45, 0, Math.PI * 2); ctx.fill();
+    });
+
+    // ── 6. Heat shimmer overlay at base (bottom warmth) ──
+    const heat = ctx.createLinearGradient(0, H * 0.55, 0, H);
+    heat.addColorStop(0, 'rgba(0,0,0,0)');
+    heat.addColorStop(0.5, `rgba(35,6,2,${0.12 + Math.sin(t * 0.025) * 0.06})`);
+    heat.addColorStop(1, `rgba(50,8,2,${0.22 + Math.sin(t * 0.018) * 0.08})`);
+    ctx.fillStyle = heat; ctx.fillRect(0, 0, W, H);
+
+    // ── 7. Subtle vignette darkening edges ──
+    const vig = ctx.createRadialGradient(W * 0.5, H * 0.5, Math.min(W, H) * 0.25, W * 0.5, H * 0.5, Math.max(W, H) * 0.8);
+    vig.addColorStop(0, 'rgba(0,0,0,0)');
+    vig.addColorStop(0.6, 'rgba(0,0,0,0.08)');
+    vig.addColorStop(1, 'rgba(0,0,0,0.45)');
+    ctx.fillStyle = vig; ctx.fillRect(0, 0, W, H);
+
     requestAnimationFrame(draw);
   }
   draw();
 }
-
-
 
 function initPCCanvas() {
   const canvas = document.getElementById('pc-canvas');
